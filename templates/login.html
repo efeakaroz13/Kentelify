@@ -12,5 +12,8 @@
 	<button class="btn btn-outline-dark btn-purple">Login</button>
 	{% endif %}
 	</center>
+	{% if scc == True %}
+		<script>alert("Your account has been created, login with your information!");window.location.assign('/login')</script>
+	{% endif %}
 </form>
 {% endblock %}
