@@ -27,7 +27,7 @@ def index():
 	else:
 		username = decrypt(username)
 		password = decrypt(request.cookies.get("password"))
-		return {"username":username}
+		return render_template("home.html")
 
 @app.route("/register",methods=["POST","GET"])
 def register():
