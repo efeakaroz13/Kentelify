@@ -1,0 +1,18 @@
+.btn-purple{
+	color:#9400de;
+	border: 1px solid #9400de;
+	background: none;
+}
+.btn-purple:hover{
+	color:white;
+	background: #9400de;
+}
+.btn-red{
+	color:#f26868;
+	border: 1px solid #f26868;
+	background: none;
+}
+.btn-red:hover{
+	color:white;
+	background: #f26868;
+}

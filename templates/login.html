@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block main %}<br><br>
+<center><h2 style="font-family: 'Koulen', cursive;font-family: 'Merriweather', serif;margin-left:10px;color:#9400de">Log In</h2></center>
+<br>
+<form action="" method="POST">
+	<center><input type="text" autocomplete="off" placeholder="Enter your username..." name="username" class="form-control" style="width:70%;" required><br>
+	<input type="password" autocomplete="off" placeholder="Enter password..." name="password" class="form-control" style="width:70%;" required><br>
+	
+	{% if error %}
+	<button class="btn btn-outline-dark btn-red">Login</button>
+	{% else %}
+	<button class="btn btn-outline-dark btn-purple">Login</button>
+	{% endif %}
+	</center>
+</form>
+{% endblock %}

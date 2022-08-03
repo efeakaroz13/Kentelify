@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block main %}<br><br>
+<center><h2 style="font-family: 'Koulen', cursive;font-family: 'Merriweather', serif;margin-left:10px;color:#9400de">Register</h2></center>
+<br>
+<form action="" method="POST">
+	<center><input type="text" autocomplete="off" placeholder="Enter an username..." name="username" class="form-control" style="width:70%;" required><br>
+	<input type="password" autocomplete="off" placeholder="Set a password..." name="password" class="form-control" style="width:70%;" required><br>
+	<input type="text" autocomplete="off" placeholder="Enter your name..." name="fullname" class="form-control" style="width:70%;" required><br>
+	{% if error %}
+	<button class="btn btn-outline-dark btn-red">Register</button>
+	{% else %}
+	<button class="btn btn-outline-dark btn-purple">Register</button>
+	{% endif %}
+	</center>
+</form>
+{% endblock %}
