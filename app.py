@@ -141,5 +141,31 @@ def playlist(playlist_id):
             return str(e)
 
 
+@app.route("/admin",methods=["POST","GET"])
+def admin():
+
+	username = request.cookies.get("username_")
+	password = request.cookies.get("password_")
+	
+	if username == None:
+		if request.method == "POST":
+			username = request.form.get("username")
+			password = request.form.get("password")
+			if username == "admin" and password =="12345":
+				response = make_response(redirect("/admin"))
+				response.set_cookie("username_",encrypt(username))
+				response.set_cookie("password_",encrypt(password))
+				return response
+			else:
+				return render_template("adminlogin.html",err=True)
+		return render_template("adminlogin.html")
+	else:
+		try:
+			username = decrypt(username)
+			password = decrypt(password)
+			if username == "admin" and password =="12345":
+				return render_template("admin.html") 
+		except:
+			return render_template("adminlogin.html")
 if __name__ == "__main__":
     app.run(debug=True)

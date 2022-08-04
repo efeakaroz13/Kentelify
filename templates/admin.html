@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block main %}
+<div id="logs"></div>
+<p><a id="cmd">Kentelify:~ admin</a> <a style="color:rgb(52, 52, 254)">$</a> <span id="query"></span><span class="blinker">█</span></p>
+<style>
+    body{
+        font-family: monospace;
+        color:greenyellow;
+        background: rgb(17, 16, 16);
+    }
+    nav{
+        display: none;
+
+    }
+    .navbar{
+        display:none
+    }
+    .blinker{
+        transition: 0.5s;
+    }
+</style>
+<script src="/static/bash.js"></script>
+{% endblock %}
