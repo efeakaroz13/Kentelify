@@ -14,7 +14,7 @@ function blinker(){
     }
 }
 setInterval(blinker,400)
-
+oldcommands = []
 letterlist = []
 document.addEventListener('keydown', (e) => {
 
@@ -58,10 +58,29 @@ document.addEventListener('keydown', (e) => {
             const newquery = queryarray.join('')
             document.getElementById("query").innerHTML = newquery
         }
+        counter = 1
+        if(e.code == "ArrowUp"){
+            document.getElementById("query").innerHTML = oldcommands[oldcommands.length-counter]
+            counter -=1
+        }
+        if(e.code == "ArrowDown"){
+            if (counter <1) {
+                counter +=1
+                document.getElementById("query").innerHTML = oldcommands[oldcommands.length-counter-1]
+            }
+            if (counter == 1) {
+                document.getElementById("query").innerHTML = ""
+            }
+            
+            
+            
+        }
         if (e.code =="Enter") {
+            
             input = document.getElementById("query").innerHTML;
             document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p>Kentelify:~ admin <a style='color:rgb(52, 52, 254)'>$</a> "+input+"</p>"
             document.getElementById("query").innerHTML = ""
+            oldcommands.push(input.trim())
             if(input.trim() == "clear" || input.trim() == "cls" ){
                 document.getElementById("logs").innerHTML = ""
             }
