@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% block main %}<br><br>
 <ul class="list-group">
-	<li class="list-group-item">Create A new Playlist <i class="fa-solid fa-plus plusicon"></i></li>
+	<li class="list-group-item createplaylist" onclick="window.location.assign('/create_playlist')">Create A new Playlist <i class="fa-solid fa-plus plusicon"></i></li>
+</ul><br><br>
+<p>Your Playlists:</p>
+<ul class="list-group">
+	{% for p in playlists %}
+		<li class="list-group-item"><br><h5>{{p["title"]}}</h5><p>{{p["description"]}}</p></li>
+	{% endfor %}
 </ul>
 {% endblock %}

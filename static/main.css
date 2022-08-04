@@ -16,3 +16,20 @@
 	color:white;
 	background: #f26868;
 }
+.createplaylist:hover{
+	transition:0.2s;
+	background: #9400de;
+	color:white;
+}
+.createplaylist{
+	transition:0.2s;
+}
+.back{
+  position:absolute;
+  left:10px;
+  color:#9400de;
+  margin-top:10px;
+  background:none;
+  border:0px;
+
+}
