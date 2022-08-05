@@ -122,7 +122,17 @@ document.addEventListener('keydown', (e) => {
                         document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p>  "+data.out.length+" SONGS COUNTED</p>"
                         for (let song = 0; song < data.out.length; song++) {
                             const element = data.out[song];
-                            document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p><a style='color:blue;'>DOWNLOADING</a> | <a style='color:white'>"+element+"</a></p>"
+                            $.getJSON("/download/by_search?q="+element,function(data){
+                                if (data.SCC == true) {
+                                    document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p><a style='color:#8bfc02;'>DOWNLOADED</a> | <a style='color:white'>"+element+"</a></p>"
+
+
+                                }
+                                else{
+                                    document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p><a style='color:#bc0e0b;'>FAILED</a> | <a style='color:white'>"+element+"</a></p>"
+
+                                }
+                            })
                         }
 
                     })

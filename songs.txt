@@ -1,1 +1,17 @@
 /static/Dead Weight - Jack Stauber.mp3||--||Dead Weight Jack Strauber
+/static/NF-If You Want Love (Türkçe Çeviri).mp3||--||If You Want Love NF
+/static/NF - Hate Myself (Audio).mp3||--||Hate Myself NF
+/static/NF - Lie (Audio).mp3||--||Lie NF
+/static/NF - The Search.mp3||--||The Search NF
+/static/NF - JUST LIKE YOU (Audio).mp3||--||JUST LIKE YOU NF
+/static/2Pac - Ambitionz az a ridah [HD].mp3||--||Ambitionz Az A Ridah 2Pac
+/static/50 Cent - Just A Lil Bit.mp3||--||Just A Lil Bit 50 Cent
+/static/twenty one pilots - Ride (Official Video).mp3||--||Ride Twenty One Pilots
+/static/2Pac - All Eyez On Me Ft Big Syke (Nozzy-E Remix) (Prod By Beat Brothers) 2019.mp3||--||All Eyez On Me (ft. Big Syke) 2Pac
+/static/twenty one pilots Heavydirtysoul [OFFICIAL VIDEO].mp3||--||Heavydirtysoul Twenty One Pilots
+/static/Seni Kendime Sakladım - Duman.mp3||--||Seni Kendime Sakladım Duman
+/static/Meek Mill YG & Snoop Dogg - Thats My N (from Bright The Album) [Official Audio].mp3||--||That's My N**** (with Meek Mill, YG 
+/static/twenty one pilots Lane Boy [OFFICIAL VIDEO].mp3||--||Lane Boy Twenty One Pilots
+/static/AAP Ferg - Dreams Fairytales Fantasies (Official Audio) ft Brent Faiyaz Salaam Remi.mp3||--||Dreams, Fairytales, Fantasies (feat. Brent Faiyaz 
+/static/Olivia Rodrigo - good 4 u (Official Video).mp3||--||good 4 u Olivia Rodrigo
+/static/Yesterdays Rebel - The OReillys and the Paddyhats [Official Video].mp3||--||Yesterday's Rebel The O'Reillys and the Paddyhats
