@@ -16,6 +16,7 @@ function blinker(){
 setInterval(blinker,400)
 oldcommands = []
 letterlist = []
+programcode = false
 document.addEventListener('keydown', (e) => {
 
     console.log(e.code)
@@ -25,6 +26,27 @@ document.addEventListener('keydown', (e) => {
 
     
     if(letter == undefined){
+        if (e.code == "Period" || e.code == "Slash") {
+            document.getElementById("query").innerHTML =document.getElementById("query").innerHTML+"."
+        }
+        if(e.code == "Equal"){
+            if(letterlist[0] == "A2"){
+                letterlist.length = 0;
+                document.getElementById("query").innerHTML = document.getElementById("query").innerHTML+"_"
+            }
+            else{
+                document.getElementById("query").innerHTML = document.getElementById("query").innerHTML+"-"
+            }
+        }
+
+        if (e.code == "Tab") {
+            queryrn = document.getElementById("query").innerHTML;
+            if(queryrn.split("python3 ") [1] != undefined){
+                if (queryrn.split("mu") [1] != undefined) {
+                    document.getElementById("query").innerHTML = "python3 music_download_script.py"
+                }
+            }
+        }
         if(e.code == "Minus"){
             document.getElementById("query").innerHTML =document.getElementById("query").innerHTML+"-"
         }
@@ -62,6 +84,7 @@ document.addEventListener('keydown', (e) => {
         if(e.code == "ArrowUp"){
             document.getElementById("query").innerHTML = oldcommands[oldcommands.length-counter]
             counter -=1
+
         }
         if(e.code == "ArrowDown"){
             if (counter <1) {
@@ -76,7 +99,35 @@ document.addEventListener('keydown', (e) => {
             
         }
         if (e.code =="Enter") {
-            
+            if (programcode == true) {
+                
+                input = document.getElementById("query").innerHTML;
+                document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p><a style='color:white'>? | Enter a Spotify playlist URL</a> <a style='color:rgb(52, 52, 254)'>$</a> "+input+"</p>"
+                document.getElementById("query").innerHTML = ""
+                if (input.trim() == "q" || input.trim() == "exit"||input.trim() == "quit") {
+                    document.getElementById("cmd").innerHTML="Kentelify:~ admin";
+                    programcode = false
+                }
+                if (input.trim() == "clear" || input.trim() == "cls" ) {
+                    document.getElementById("logs").innerHTML = ""
+                    document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p><img src='/static/mp3fy.png' height='100'></p>"
+                    document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p><a style='color:cyan'>Author</a>:   Efe Akaröz </p>"
+                    document.getElementById("cmd").innerHTML="<a style='color:white'>? | Enter a Spotify playlist URL</a>"
+                   
+
+                }
+                if (input.trim().split("https://open.spotify.com")[1] != undefined) {
+
+                    $.getJSON("/playlister_api/"+input.trim().split("https://open.spotify.com/playlist/")[1],function (data) {
+                        for (let song = 0; song < data.out.length; song++) {
+                            const element = data.out[song];
+                            document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p><a style='color:blue;'>DOWNLOADING</a> | <a style='color:white'>"+element+"</a></p>"
+                        }
+
+                    })
+                }
+            }else{
+
             input = document.getElementById("query").innerHTML;
             document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p>Kentelify:~ admin <a style='color:rgb(52, 52, 254)'>$</a> "+input+"</p>"
             document.getElementById("query").innerHTML = ""
@@ -98,9 +149,21 @@ document.addEventListener('keydown', (e) => {
             else if(input.trim()==""){
                 null
             }
-        
+            else if(input.trim().split("python3 ")[1] !=undefined){
+                if (input.trim().split("python3 ")[1] == "music_download_script.py") {
+                    programcode = true
+                    document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p><img src='/static/mp3fy.png' height='100'></p>"
+                    document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p><a style='color:cyan'>Author</a>:   Efe Akaröz </p>"
+                    document.getElementById("cmd").innerHTML="<a style='color:white'>? | Enter a Spotify playlist URL</a>"
+                   
+                }
+                else{
+                    document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p> No file named:"+input.trim().split("python3 ")[1]+"</p>"
+                }
+            }
             else{
                 document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p>Unknonw command '"+input+"', type --help for seeing commands</p>"
+            }
             }
         }
 

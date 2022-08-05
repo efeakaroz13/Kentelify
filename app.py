@@ -6,6 +6,9 @@ from flask_cors import CORS
 from kauth import kauth
 from cryptography.fernet import Fernet
 from playlistmanager import manager
+import spotipy
+import os
+from spotipy.oauth2 import SpotifyClientCredentials
 
 key = b'D71kHIq7Wsyrjd30avvyzrS7BTT74lAXBB5y6mllnsQ='
 fernet = Fernet(key)
@@ -167,5 +170,30 @@ def admin():
 				return render_template("admin.html") 
 		except:
 			return render_template("adminlogin.html")
+
+
+@app.route("/playlister_api/<playlist_id>")
+def playlisterapi(playlist_id):
+	client_id = "a0c932b9e34b4149b8f367c5e403313e"
+	secretclient = "37335ef57fad4854825c67826b6a5816"
+	os.environ["SPOTIPY_CLIENT_ID"] =client_id
+	os.environ["SPOTIPY_CLIENT_SECRET"] =secretclient
+
+
+
+	sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
+
+	offset = 0
+
+	response = sp.playlist_items(playlist_id,
+								offset=offset,
+								fields='items.track,total')
+
+	output = {"out":[],"length":0}
+	for r in response['items']:
+		outp = str(r['track']['name'])+" "+str(r['track']['artists'][0]['name'])
+		output["out"].append(outp)
+	output["length"] = len(output["out"])
+	return output
 if __name__ == "__main__":
     app.run(debug=True)
