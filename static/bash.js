@@ -119,6 +119,7 @@ document.addEventListener('keydown', (e) => {
                 if (input.trim().split("https://open.spotify.com")[1] != undefined) {
 
                     $.getJSON("/playlister_api/"+input.trim().split("https://open.spotify.com/playlist/")[1],function (data) {
+                        document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p>  "+data.out.length+" SONGS COUNTED</p>"
                         for (let song = 0; song < data.out.length; song++) {
                             const element = data.out[song];
                             document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML+"<p><a style='color:blue;'>DOWNLOADING</a> | <a style='color:white'>"+element+"</a></p>"
