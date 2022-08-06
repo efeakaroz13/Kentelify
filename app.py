@@ -318,8 +318,8 @@ def playlistviewandedit(playlistid):
 		return redirect("/")
 
 
-@app.route("/add_song/<playlist>")
-def add_song(playlist):
+@app.route("/add_song/<playlist_id>")
+def add_song(playlist_id):
 	musicfile = request.args.get("file")
 	musicname = request.args.get("music")
 	if musicname == None or musicfile == None:
@@ -329,15 +329,20 @@ def add_song(playlist):
 		password = decrypt(request.cookies.get("password"))
 
 		mymanager= manager(username,password)
-		myplaylist = manager.viewplaylist(playlist)
+		myplaylist = mymanager.viewplaylist(playlistid=playlist_id)
 		if myplaylist["username"] == username.strip():
-			playlist_reader = json.loads(decrypt(open(f"{username}.{myplaylist['id']}","r").read()))
+			playlist_reader = json.loads(decrypt(open(f"playlists/{username}.{myplaylist['id']}","r").read()))
 			data = {"file":musicfile,"musicname":musicname}
-			playlist_reader["music"].append(data)
-			writervariable = open(f"{username}.{myplaylist['id']}","w")
-			writervariable.write(encrypt(json.dumps(playlist_reader,indent=4)))
-		return {"SCC":True}
-	except:
+			try:
+				playlist_reader["musics"].index(data)
+				print("INFO | PASSING")
+			except:
+				playlist_reader["musics"].insert(0,data)
+				writervariable = open(f"playlists/{username}.{myplaylist['id']}","w")
+				writervariable.write(encrypt(json.dumps(playlist_reader,indent=4)))
+		return redirect("/playlistview/{}".format(playlist_id))
+	except Exception as e:
+		print(e)
 		return redirect("/")
 
 @app.route("/songlister")
