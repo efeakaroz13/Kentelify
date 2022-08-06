@@ -9,7 +9,7 @@ from playlistmanager import manager
 import spotipy
 import os
 from spotipy.oauth2 import SpotifyClientCredentials
-
+import json
 import urllib.request
 import re
 import time
@@ -18,57 +18,57 @@ import os
 from colorama import Fore, Back, Style
 
 def compress(basename):
-        os.system(f"ffmpeg -y -i '{basename}.mp4' -vcodec libx265 -crf 28 '{basename}_C.mp4'")
+		os.system(f"ffmpeg -y -i '{basename}.mp4' -vcodec libx265 -crf 28 '{basename}_C.mp4'")
 
 class Downloader:
-    def downloadvideo(search):
-        search = search.lower().replace("ü","u").replace("$","s").replace("ö","").replace("ş","s").replace("ö","o").replace("İ","I").replace("ı","i")
-        try:
-            page = urllib.request.urlopen("https://www.youtube.com/results?search_query={}".format(search.replace(' ','+')))
-            videoids=  re.findall(r"watch\?v=(\S{11})",page.read().decode())
-            theurl = "https://youtube.com/watch?v="+videoids[0]
+	def downloadvideo(search):
+		search = search.lower().replace("ü","u").replace("$","s").replace("ö","").replace("ş","s").replace("ö","o").replace("İ","I").replace("ı","i")
+		try:
+			page = urllib.request.urlopen("https://www.youtube.com/results?search_query={}".format(search.replace(' ','+')))
+			videoids=  re.findall(r"watch\?v=(\S{11})",page.read().decode())
+			theurl = "https://youtube.com/watch?v="+videoids[0]
 
-            yt = YouTube(theurl)
-            print(Fore.BLUE,"DOWNLOADING | {}".format(yt.title))
-            
-            video = yt.streams.filter(only_audio=True).first()
-            
-            
-            out_file = video.download(output_path="./static")
-            base, ext = os.path.splitext(out_file)
-            compress(base)
-            os.system(f"ffmpeg -y -i '{base}_C.mp4' -b:a 192K -vn '{base}.mp3'")
-            os.system(f"rm '{base}.mp4'") 
-            os.system(f"rm '{base}_C.mp4'")
+			yt = YouTube(theurl)
+			print(Fore.BLUE,"DOWNLOADING | {}".format(yt.title))
+			
+			video = yt.streams.filter(only_audio=True).first()
+			
+			
+			out_file = video.download(output_path="./static")
+			base, ext = os.path.splitext(out_file)
+			compress(base)
+			os.system(f"ffmpeg -y -i '{base}_C.mp4' -b:a 192K -vn '{base}.mp3'")
+			os.system(f"rm '{base}.mp4'") 
+			os.system(f"rm '{base}_C.mp4'")
 
-            print(Fore.GREEN,"COMPLETE | {}".format(yt.title))
-            print(Style.RESET_ALL,"\n")
-            return f"/static/{base.split('/')[-1]}.mp3"
-        except:
-            print(Fore.RED,"NETWORK ERR - Retrying in 10 seconds")
-            print(Style.RESET_ALL)
-            time.sleep(10)
-            page = urllib.request.urlopen("https://www.youtube.com/results?search_query={}".format(search.replace(' ','+')))
-            videoids=  re.findall(r"watch\?v=(\S{11})",page.read().decode())
-            theurl = "https://youtube.com/watch?v="+videoids[0]
-            
-            yt = YouTube(theurl)
-            print(Fore.BLUE,"DOWNLOADING | {}".format(yt.title))
-            
-            video = yt.streams.filter(only_audio=True).first()
-            
-            
-            out_file = video.download(output_path="./static")
-            base, ext = os.path.splitext(out_file)
+			print(Fore.GREEN,"COMPLETE | {}".format(yt.title))
+			print(Style.RESET_ALL,"\n")
+			return f"/static/{base.split('/')[-1]}.mp3"
+		except:
+			print(Fore.RED,"NETWORK ERR - Retrying in 10 seconds")
+			print(Style.RESET_ALL)
+			time.sleep(10)
+			page = urllib.request.urlopen("https://www.youtube.com/results?search_query={}".format(search.replace(' ','+')))
+			videoids=  re.findall(r"watch\?v=(\S{11})",page.read().decode())
+			theurl = "https://youtube.com/watch?v="+videoids[0]
+			
+			yt = YouTube(theurl)
+			print(Fore.BLUE,"DOWNLOADING | {}".format(yt.title))
+			
+			video = yt.streams.filter(only_audio=True).first()
+			
+			
+			out_file = video.download(output_path="./static")
+			base, ext = os.path.splitext(out_file)
 
-            compress(base)
-            os.system(f"ffmpeg -y -i '{base}_C.mp4' -b:a 192K -vn '{base}.mp3'")
-            os.system(f"rm '{base}.mp4'") 
-            os.system(f"rm '{base}_C.mp4'")
+			compress(base)
+			os.system(f"ffmpeg -y -i '{base}_C.mp4' -b:a 192K -vn '{base}.mp3'")
+			os.system(f"rm '{base}.mp4'") 
+			os.system(f"rm '{base}_C.mp4'")
 
-            print(Fore.GREEN,"COMPLETE | {}".format(yt.title))
-            print(Style.RESET_ALL,"\n")
-            return f"/static/{base.split('/')[-1]}.mp3"
+			print(Fore.GREEN,"COMPLETE | {}".format(yt.title))
+			print(Style.RESET_ALL,"\n")
+			return f"/static/{base.split('/')[-1]}.mp3"
 
 
 
@@ -79,13 +79,13 @@ fernet = Fernet(key)
 
 
 def encrypt(text):
-    encodedtext = fernet.encrypt(text.encode())
-    return encodedtext.decode()
+	encodedtext = fernet.encrypt(text.encode())
+	return encodedtext.decode()
 
 
 def decrypt(text):
-    encodedtext = fernet.decrypt(text.encode())
-    return encodedtext.decode()
+	encodedtext = fernet.decrypt(text.encode())
+	return encodedtext.decode()
 
 
 auth = kauth("Kentelify")
@@ -95,117 +95,117 @@ CORS(app)
 
 @app.route("/")
 def index():
-    username = request.cookies.get("username")
-    password = request.cookies.get("password")
-    if username == None or username.strip() == "":
+	username = request.cookies.get("username")
+	password = request.cookies.get("password")
+	if username == None or username.strip() == "":
 
-        return render_template("base.html")
-    else:
-        username = decrypt(username)
-        password = decrypt(request.cookies.get("password"))
+		return render_template("base.html")
+	else:
+		username = decrypt(username)
+		password = decrypt(request.cookies.get("password"))
 
-        outcheck = auth.login(username, password)
-        if outcheck["SCC"] == True:
-            try:
-                myapp = manager(username, password)
-                myplaylists = myapp.playlister()
-                return render_template("home.html",playlists=myplaylists)
+		outcheck = auth.login(username, password)
+		if outcheck["SCC"] == True:
+			try:
+				myapp = manager(username, password)
+				myplaylists = myapp.playlister()
+				return render_template("home.html",playlists=myplaylists)
 
-            except Exception as e:
-                return str(e)
+			except Exception as e:
+				return str(e)
 
-        else:
-            return render_template("base.html")
+		else:
+			return render_template("base.html")
 
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
-    msg = request.args.get("msg")
-    if msg != None:
-        if msg == "noscc":
-            return render_template("register.html", error=True)
+	msg = request.args.get("msg")
+	if msg != None:
+		if msg == "noscc":
+			return render_template("register.html", error=True)
 
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        fullname = request.form.get("fullname")
-        response = auth.createuser(
-            username=username, password=password, fullname=fullname)
-        if response["SCC"] == True:
-            return redirect("/login?msg=scc")
-        if response["SCC"] == False:
-            return redirect("/register?msg=noscc")
-    return render_template("register.html")
+	if request.method == "POST":
+		username = request.form.get("username")
+		password = request.form.get("password")
+		fullname = request.form.get("fullname")
+		response = auth.createuser(
+			username=username, password=password, fullname=fullname)
+		if response["SCC"] == True:
+			return redirect("/login?msg=scc")
+		if response["SCC"] == False:
+			return redirect("/register?msg=noscc")
+	return render_template("register.html")
 
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
-    if request.method == "POST":
+	if request.method == "POST":
 
-        username = request.form.get("username")
-        password = request.form.get("password")
-        check = auth.login(username, password)
-        if check["SCC"] == True:
-            response = make_response(redirect("/"))
-            usernameencrypted = encrypt(username)
-            response.set_cookie("username", usernameencrypted)
-            passwordencrypted = encrypt(password)
-            response.set_cookie("password", passwordencrypted)
-            return response
-        if check["SCC"] == False:
-            return redirect("/login?msg=noscc")
-    msg = request.args.get("msg")
-    if msg != None:
-        if msg == "scc":
-            return render_template("login.html", scc=True)
-        else:
-            pass
-        if msg == "noscc":
-            return render_template("login.html", error=True)
-    else:
-        pass
-    return render_template("login.html")
+		username = request.form.get("username")
+		password = request.form.get("password")
+		check = auth.login(username, password)
+		if check["SCC"] == True:
+			response = make_response(redirect("/"))
+			usernameencrypted = encrypt(username)
+			response.set_cookie("username", usernameencrypted)
+			passwordencrypted = encrypt(password)
+			response.set_cookie("password", passwordencrypted)
+			return response
+		if check["SCC"] == False:
+			return redirect("/login?msg=noscc")
+	msg = request.args.get("msg")
+	if msg != None:
+		if msg == "scc":
+			return render_template("login.html", scc=True)
+		else:
+			pass
+		if msg == "noscc":
+			return render_template("login.html", error=True)
+	else:
+		pass
+	return render_template("login.html")
 
 
 @app.route("/create_playlist", methods=["POST", "GET"])
 def createplaylist():
-    username = request.cookies.get("username")
-    password = request.cookies.get("password")
-    try:
-        username = decrypt(username)
-        password = decrypt(password)
-        mymanager = manager(username, password)
+	username = request.cookies.get("username")
+	password = request.cookies.get("password")
+	try:
+		username = decrypt(username)
+		password = decrypt(password)
+		mymanager = manager(username, password)
 
-        if request.method == "POST":
-            playlistname = request.form.get("playlistname")
-            description = request.form.get("description")
-            mymanager.create_playlist(playlistname, description)
-            return redirect("/")
-        if request.method == "GET":
-            return render_template("create.html")
+		if request.method == "POST":
+			playlistname = request.form.get("playlistname")
+			description = request.form.get("description")
+			mymanager.create_playlist(playlistname, description)
+			return redirect("/")
+		if request.method == "GET":
+			return render_template("create.html")
 
-    except:
-        return redirect("/")
+	except:
+		return redirect("/")
 
 
 @app.route("/playlist/<playlist_id>")
 def playlist(playlist_id):
 
-    username = request.cookies.get("username")
-    if username == None:
-        return abort(403)
-    else:
-        username = decrypt(username)
-        password = decrypt(request.cookies.get("password"))
-        try:
-            mymanager = manager(username, password)
-            checkout = mymanager.viewplaylist(playlistid=playlist_id)
-            if checkout["SCC"] == True:
-                return checkout
-            else:
-                return"404"
-        except Exception as e:
-            return str(e)
+	username = request.cookies.get("username")
+	if username == None:
+		return abort(403)
+	else:
+		username = decrypt(username)
+		password = decrypt(request.cookies.get("password"))
+		try:
+			mymanager = manager(username, password)
+			checkout = mymanager.viewplaylist(playlistid=playlist_id)
+			if checkout["SCC"] == True:
+				return checkout
+			else:
+				return"404"
+		except Exception as e:
+			return str(e)
 
 
 @app.route("/admin",methods=["POST","GET"])
@@ -276,5 +276,79 @@ def download_by_search():
 				return {"SCC":False,"filename":""}
 	except:
 		return abort(403)
+
+
+@app.route("/song")
+def player():
+	songname = request.args.get("songname")
+	songlister = open("songs.txt","r").readlines()
+	for r in songlister:
+		try:
+			r.split("||--||")[1].lower().split(songname.lower())[1]
+			return render_template("play.html",file_=r.split("||--||")[0],name=r.split("||--||")[1])
+		except:
+			pass
+
+	return "404"
+@app.route("/remove/playlist/<playlist_id>")
+def removeplaylist(playlist_id):
+	try:
+		username = decrypt(request.cookies.get("username"))
+		password = decrypt(request.cookies.get("password"))
+		mymanager = manager(username,password)
+		output = mymanager.viewplaylist(playlist_id)
+		if output["username"] == username:
+			os.system(f"rm 'playlists/{username}.{playlist_id}'")
+			return redirect("/")
+		else:
+			return redirect("/")
+
+	except:
+		return redirect("/")
+@app.route("/playlistview/<playlistid>")
+def playlistviewandedit(playlistid):
+	try:
+		username = decrypt(request.cookies.get("username"))
+		password = decrypt(request.cookies.get("password"))
+		playlistmanager= manager(username,password)
+		myplaylist = playlistmanager.viewplaylist(playlistid)
+		return render_template("playlisr10.html",playlistdata=myplaylist)
+	except Exception as e:
+		print(e)
+		return redirect("/")
+
+
+@app.route("/add_song/<playlist>")
+def add_song(playlist):
+	musicfile = request.args.get("file")
+	musicname = request.args.get("music")
+	if musicname == None or musicfile == None:
+		return {"SCC":False,"err":"Music name or file is not specified."}
+	try:
+		username = decrypt(request.cookies.get("username"))
+		password = decrypt(request.cookies.get("password"))
+
+		mymanager= manager(username,password)
+		myplaylist = manager.viewplaylist(playlist)
+		if myplaylist["username"] == username.strip():
+			playlist_reader = json.loads(decrypt(open(f"{username}.{myplaylist['id']}","r").read()))
+			data = {"file":musicfile,"musicname":musicname}
+			playlist_reader["music"].append(data)
+			writervariable = open(f"{username}.{myplaylist['id']}","w")
+			writervariable.write(encrypt(json.dumps(playlist_reader,indent=4)))
+		return {"SCC":True}
+	except:
+		return redirect("/")
+
+@app.route("/songlister")
+def songlister():
+	try:
+		username = decrypt(request.cookies.get("username"))
+		password = decrypt(request.cookies.get("password"))
+		mymanager = manager(username,password)
+		allsongs = mymanager.listallsongs()
+		return {"SCC":True,"out":allsongs,"counter":len(allsongs)}
+	except:
+		return {"SCC":False,"err":"Login credentials"}
 if __name__ == "__main__":
-    app.run(debug=True)
+	app.run(debug=True,host="0.0.0.0")

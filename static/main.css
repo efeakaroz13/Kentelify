@@ -33,3 +33,13 @@
   border:0px;
 
 }
+.remove{
+	background: #fc1b1b;
+	color:white;
+	transition:0.5s;
+}
+body{
+	-webkit-user-select: none; /* Safari */
+	-ms-user-select: none; /* IE 10 and IE 11 */
+	user-select: none;
+}

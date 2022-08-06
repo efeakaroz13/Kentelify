@@ -65,6 +65,7 @@ class manager:
       else:
         myfile = json.loads(decrypt(open("playlists/"+outputlist[0],"r").read()))
         myfile["SCC"]=True
+        myfile["id"] = playlistid.replace('.','')
         return myfile
     else:
       raise ValueError("Username or password is not correct")
@@ -86,3 +87,16 @@ class manager:
     else:
       return redirect("/")
     
+  def listallsongs(self):
+    output = []
+    musiclistfile = open("songs.txt","r")
+    for m in musiclistfile.readlines():
+      filename = m.split("||--||")[0]
+      songname = m.split("||--||")[1]
+      data = {
+        "filename":filename.replace("\n",""),
+        "songname":songname.replace("\n","")
+      }
+      output.append(data)
+
+    return output

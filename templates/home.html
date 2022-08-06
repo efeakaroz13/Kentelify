@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 {% block main %}<br><br>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/static/playlistmanager.js"></script>
 <ul class="list-group">
 	<li class="list-group-item createplaylist" onclick="window.location.assign('/create_playlist')">Create A new Playlist <i class="fa-solid fa-plus plusicon"></i></li>
 </ul><br><br>
 <p>Your Playlists:</p>
-<ul class="list-group">
+<ul class="list-group" >
 	{% for p in playlists %}
-		<li class="list-group-item"><br><h5>{{p["title"]}}</h5><p>{{p["description"]}}</p></li>
+		<li class="list-group-item" id="{{p['id']}}" ontouchstart="touchdown(this)" ontouchend="touchup(this)" onmousedown="mousedown(this)" onmouseup="mouseup(this)" ontouchmove="touchmove(this)" onmouseleave="leavemouse(this)"><br>
+			<h5 onclick="window.location.assign('/playlistview/{{p['id']}}')">{{p["title"]}} <button style="border:0px;background:none;color:white;display:none;" id="btn_{{p['id']}}" onclick="window.location.assign('/remove/playlist/{{p['id']}}')"><i class="fa-solid fa-trash"></i></button></h5>
+
+			<p>{{p["description"]}}</p>
+		</li>
 	{% endfor %}
 </ul>
 {% endblock %}
