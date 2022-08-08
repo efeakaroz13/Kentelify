@@ -278,7 +278,7 @@ def download_by_search():
 		return abort(403)
 
 
-@app.route("/song")
+@app.route("/play")
 def player():
 	songname = request.args.get("songname")
 	songlister = open("songs.txt","r").readlines()
@@ -355,5 +355,33 @@ def songlister():
 		return {"SCC":True,"out":allsongs,"counter":len(allsongs)}
 	except:
 		return {"SCC":False,"err":"Login credentials"}
+
+
+@app.route("/remove_song/<playlistid>")
+def song_Remove(playlistid):
+	try:
+		username = decrypt(request.cookies.get("username"))
+		password = decrypt(request.cookies.get("password"))
+	except:
+		return abort(403)
+
+	mymanager=manager(username,password)
+	songname = request.args.get("music")
+	try:
+		myplaylist = json.loads(decrypt(open(f"playlists/{username}.{playlistid}","r").read()))
+	except:
+		return redirect("/")
+	playlistfile = open(f"playlists/{username}.{playlistid}","w")
+	musics = myplaylist["musics"]
+	for m in musics:
+		if m["musicname"] == songname:
+			musics.pop(musics.index(m))
+		else:
+			pass
+	data = json.dumps(myplaylist, indent=4)
+	encrypteddata = encrypt(str(data))
+	playlistfile.write(encrypteddata)
+	return redirect("/playlistview/{}".format(playlistid))
+
 if __name__ == "__main__":
 	app.run(debug=True,host="0.0.0.0")

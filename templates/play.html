@@ -1,10 +1,36 @@
 {% extends 'base.html' %}
 {% block main %}<br><br>
 <center>
-<div class="card" style="width:60%;">
+<script >
+
+	var playButton = document.querySelector('#play-button');
+	var firstSong = new Audio('{{file_}}');
+	var trackList = [firstSong];
+
+	function currentSong() {
+		for(var i=0; i<trackList.length; i++) {
+			var songID = document.querySelector('#stateicon');
+			if (trackList[i].paused) {
+				document.getElementById("stateicon").parentNode.innerHTML= "<i id='stateicon' class='fas fa-pause'></i>"
+				trackList[i].play();
+			} else {
+				document.getElementById("stateicon").parentNode.innerHTML= "<i id='stateicon' class='fas fa-play'></i>"
+				trackList[i].pause();
+			}
+		}
+	}
+</script>
+<div class="card" style="width:60%;" >
 	<div class="card-body">
 		<h5>{{name}}</h5>
+		<div class="mp3-buttons">
+            <button class="button" type="button" name="button"><i class="fas fa-step-backward"></i></button>
+            <button id="play-button" onclick="currentSong()" type="button" name="button"><i  id="stateicon" class="fas fa-play"></i></button>
+            <button class="button" type="button" name="button"><i class="fas fa-step-forward"></i></button>
+        </div>
+
 	</div>
 </div>
 </center>
+
 {% endblock %}

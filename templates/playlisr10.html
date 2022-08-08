@@ -16,7 +16,7 @@
 </div><br><br>
 <ul class="list-group">
     {% for p in playlistdata["musics"] | reverse %}
-    <li class="list-group-item" id="{{p}}"><a href="{{p['file']}}">{{p["musicname"]}}</a></li>
+    <li class="list-group-item" id="{{p}}"><a href="{{p['file']}}">{{p["musicname"]}}</a><a href="/remove_song/{{playlistdata['id']}}?music={{p['musicname']}}" style="color:red;margin-left:20px">Remove</a></li>
     {% endfor %}
 </ul>
 {% endblock %}
