@@ -76,16 +76,22 @@ class manager:
       allplaylists = os.listdir("playlists")
       myplaylists = []
       for p in allplaylists:
+        print(p)
         try:
-          id_ = p.split(self.username)[1]
-          myplaylists.append(self.viewplaylist(id_))
+          id_ = p.split(".")[1]
+          checker = p.split(".")[0]
+          print(id_)
+          if checker.strip() == self.username.strip():
+            myplaylists.append(self.viewplaylist(id_))
+          else:
+              pass
         except:
           pass
 
       
       return myplaylists
     else:
-      return redirect("/")
+      return ValueError("Username or password is not correct")
     
   def listallsongs(self):
     output = []

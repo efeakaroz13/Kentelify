@@ -93,7 +93,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        printf("");
+        printf("NONE");
     }
 
     return 0;
