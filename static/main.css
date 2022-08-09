@@ -43,3 +43,20 @@ body{
 	-ms-user-select: none; /* IE 10 and IE 11 */
 	user-select: none;
 }
+.playerbutton{
+    color:purple;
+    background:none;
+    border:0px;
+}
+
+#playerbottom{
+    padding:10px;
+    background:#fff;
+    border-top:1px solid #9400de;
+    text-align:center;
+    position:fixed;
+    bottom:0px;
+    align-items:center;
+    width:100%;
+    left:0px
+}

@@ -19,4 +19,34 @@
     <li class="list-group-item" id="{{p}}"><a href="{{p['file']}}">{{p["musicname"]}}</a><a href="/remove_song/{{playlistdata['id']}}?music={{p['musicname']}}" style="color:red;margin-left:20px">Remove</a></li>
     {% endfor %}
 </ul>
+<script >
+
+	var playButton = document.querySelector('#play-button');
+	//var firstSong = new Audio('{{file_}}');
+	var trackList = [];
+	{% for p in playlistdata["musics"] | reverse  %}
+	trackList.push(new Audio("{{p['file']}}"))
+	{% endfor %}
+    var selectedsong = []
+	function currentSong() {
+			var songID = document.querySelector('#stateicon');
+			if (trackList[0].paused) {
+				document.getElementById("stateicon").parentNode.innerHTML= "<i id='stateicon' class='fas fa-pause'></i>"
+				trackList[0].play();
+			} else {
+				document.getElementById("stateicon").parentNode.innerHTML= "<i id='stateicon' class='fas fa-play'></i>"
+				trackList[0].pause();
+			}
+
+	}
+</script>
+<div class="" id="playerbottom">
+    <center>
+        <div class="mp3-buttons">
+            <button class="playerbutton" type="button" name="button"><i class="fas fa-step-backward"></i></button>
+            <button id="play-button" onclick="currentSong()" class="playerbutton" type="button" name="button"><i  id="stateicon" class="fas fa-play"></i></button>
+            <button class="playerbutton" type="button" name="button"><i class="fas fa-step-forward"></i></button>
+        </div>
+    </center>
+</div>
 {% endblock %}
