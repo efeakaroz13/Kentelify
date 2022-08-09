@@ -27,25 +27,62 @@
 	{% for p in playlistdata["musics"] | reverse  %}
 	trackList.push(new Audio("{{p['file']}}"))
 	{% endfor %}
-    var selectedsong = []
+    var selectedsong = 0
 	function currentSong() {
 			var songID = document.querySelector('#stateicon');
-			if (trackList[0].paused) {
+			if (trackList[selectedsong].paused) {
 				document.getElementById("stateicon").parentNode.innerHTML= "<i id='stateicon' class='fas fa-pause'></i>"
-				trackList[0].play();
+				trackList[selectedsong].play();
 			} else {
 				document.getElementById("stateicon").parentNode.innerHTML= "<i id='stateicon' class='fas fa-play'></i>"
-				trackList[0].pause();
+				trackList[selectedsong].pause();
 			}
 
+	}
+	function nextsong(){
+	    console.log("HEY")
+	    if(selectedsong<trackList.length){
+	        for (var ar = 0; ar < trackList.length; ar++) {
+	            trackList[ar].pause()
+            }
+            selectedsong +=1
+            currentSong()
+
+	    }
+
+	    else{
+	        for (var ar = 0; ar < trackList.length; ar++) {
+	            trackList[ar].pause()
+            }
+	        selectedsong = 0
+	        currentSong()
+	    }
+	}
+	function prevsong(){
+	    if(selectedsong>trackList.length){
+	        for (var ar = 0; ar < trackList.length; ar++) {
+	            trackList[ar].pause()
+            }
+            selectedsong =selectedsong -1
+            currentSong()
+
+	    }
+
+	    else{
+	        for (var ar = 0; ar < trackList.length; ar++) {
+	            trackList[ar].pause()
+            }
+	        selectedsong = 0
+	        currentSong()
+	    }
 	}
 </script>
 <div class="" id="playerbottom">
     <center>
         <div class="mp3-buttons">
-            <button class="playerbutton" type="button" name="button"><i class="fas fa-step-backward"></i></button>
+            <button class="playerbutton" type="button" onclick="prevsong()" name="button"><i class="fas fa-step-backward"></i></button>
             <button id="play-button" onclick="currentSong()" class="playerbutton" type="button" name="button"><i  id="stateicon" class="fas fa-play"></i></button>
-            <button class="playerbutton" type="button" name="button"><i class="fas fa-step-forward"></i></button>
+            <button class="playerbutton" onclick="nextsong()" type="button" name="button"><i class="fas fa-step-forward"></i></button>
         </div>
     </center>
 </div>
