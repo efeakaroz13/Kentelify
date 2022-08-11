@@ -28,6 +28,20 @@
 	trackList.push(new Audio("{{p['file']}}"))
 	{% endfor %}
     var selectedsong = 0
+    function endtester(){
+        for (var br = 0; br < trackList.length; br++) {
+	            trackList[br].onended=function(){
+	                if(selectedsong<trackList.length){
+	                    selectedsong+=1
+	                    document.getElementById("stateicon").parentNode.innerHTML= "<i id='stateicon' class='fas fa-pause'></i>"
+				        trackList[selectedsongt].play();
+	                }
+	            }
+
+
+        }
+    }
+    endtester()
 	function currentSong() {
 			var songID = document.querySelector('#stateicon');
 			if (trackList[selectedsong].paused) {
@@ -76,7 +90,7 @@
 	        currentSong()
 	    }
 	}
-</script>
+</script><br><br>
 <div class="" id="playerbottom">
     <center>
         <div class="mp3-buttons">
