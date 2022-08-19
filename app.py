@@ -101,9 +101,11 @@ def index():
 
 		return render_template("base.html")
 	else:
-		username = decrypt(username)
-		password = decrypt(request.cookies.get("password"))
-
+		try:
+			username = decrypt(username)
+			password = decrypt(request.cookies.get("password"))
+		except:
+			return render_template("base.html")
 		outcheck = auth.login(username, password)
 		if outcheck["SCC"] == True:
 			try:
@@ -255,8 +257,11 @@ def playlisterapi(playlist_id):
 
 	output = {"out":[],"lengtha":0}
 	for r in response['items']:
-		outp = str(r['track']['name'])+" "+str(r['track']['artists'][0]['name'])
-		output["out"].append(outp)
+		try:
+			outp = str(r['track']['name'])+" "+str(r['track']['artists'][0]['name'])
+			output["out"].append(outp)
+		except:
+			pass
 	output["lengtha"] = len(output["out"])
 	return output
 
